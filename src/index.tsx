@@ -13,11 +13,17 @@ import Switch from 'react-bootstrap/esm/Switch';
 import HomePage from './components/HomePage/HomePage';
 import { ContactPage } from './components/ContactPage/ContactPage';
 import { UserLoginPage } from './components/UserLoginPage/UserLoginPage';
+import MoviePage from './components/MoviePage/MoviePage';
 
 const menuItems = [
   new MainMenuItem("Home", "/"),
   new MainMenuItem("Contact", "/contact"),
   new MainMenuItem("Login", "/user/login"),
+
+
+  new MainMenuItem("Movie 1", "/movie/1"),
+  new MainMenuItem("Movie 7", "/movie/7"),
+  new MainMenuItem("Movie 21", "/movie/21"),
 ];
 
 ReactDOM.render(
@@ -28,6 +34,7 @@ ReactDOM.render(
         <Route exact path="/" component={ HomePage }/>
         <Route path="/contact" component={ ContactPage }/>
         <Route path="/user/login" component={ UserLoginPage }/>
+        <Route path="/movie/:mId" component={ MoviePage }/>
       </Switch>
     </HashRouter>
   </React.StrictMode>,
