@@ -15,14 +15,34 @@ export default function api(
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': getToken(),
-            }
-        }
+            },
+        };
+
         axios(requestData)
-        .then(res => responseHandler(res, resolve, requestData))
-        .catch(err => {
+        .then(res => responseHandler(res, resolve))
+        .catch(async err => {
+            if (err.response.status === 401) {
+                const newToken = await refreshToken();
+    
+                if (!newToken) {
+                    const response: ApiResponse = {
+                        status: 'login',
+                        data: null,
+                    };
+    
+                    return resolve(response);
+                }
+    
+                saveToken(newToken);
+    
+                requestData.headers['Authorization'] = getToken();
+    
+                return await repeatRequest(requestData, resolve);
+            }
+
             const response: ApiResponse = {
                 status: 'error',
-                data: null,
+                data: err,
             };
 
             resolve(response);
@@ -31,7 +51,7 @@ export default function api(
     
 }
 
-interface ApiResponse {
+export interface ApiResponse {
     status: 'ok' | 'error' | 'login';
     data: any;
 }
@@ -40,58 +60,36 @@ interface ApiResponse {
 async function responseHandler(
     res: AxiosResponse<any>,
     resolve: (value: ApiResponse) => void, 
-    requestData: AxiosRequestConfig
 ) {
     if (res.status < 200 || res.status >= 300) {
-        // 401 - bad token
-        // todo: refresh token and try again
-        // can't refresh token -> redirect user to login
-        if (res.status === 401) {
-            const newToken = await refreshToken(requestData);
-
-            if (!newToken) {
-                const response: ApiResponse = {
-                    status: 'login',
-                    data: null,
-                };
-
-                return resolve(response);
-            }
-
-            saveToken(newToken);
-
-            requestData.headers['Authorization'] = getToken();
-
-            return await repeatRequest(requestData, resolve);
-        }
-
         const response: ApiResponse = {
             status: 'error',
-            data: res.data
-        }
+            data: res.data,
+        };
 
         return resolve(response);
     }
 
-    if (res.data.statusCode < 0) {
-        const response: ApiResponse = {
-            status: 'ok',
-            data: res.data
-        }
-
-        return resolve(response);
-    }
+    const response: ApiResponse = {
+        status: 'ok',
+        data: res.data,
+    };
     
-    resolve(res.data);
+    return resolve(response);
+      
+}
+
+export function saveToken(token: string) {
+    localStorage.setItem('api_token', token);
+}
+
+export function saveRefreshToken(token: string) {
+    localStorage.setItem('api_refresh_token', token);
 }
 
 function getToken(): string {
     const token = localStorage.getItem('api_token');
-    return 'Berer ' + token;
-}
-
-function saveToken(token: string) {
-    localStorage.setItem('api_token', token);
+    return 'Bearer ' + token;
 }
 
 function getRefreshToken(): string {
@@ -99,12 +97,8 @@ function getRefreshToken(): string {
     return token + '';
 }
 
-function saveRefreshToken(token: string) {
-    localStorage.setItem('api_refresh_token', token);
-}
-
-async function refreshToken(requestData: AxiosRequestConfig): Promise<string | null> {
-    const path = 'user/refresh';
+async function refreshToken(): Promise<string | null> {
+    const path = 'auth/user/refresh';
     const data = {
         token: getRefreshToken(),
     }
@@ -118,7 +112,7 @@ async function refreshToken(requestData: AxiosRequestConfig): Promise<string | n
             'Content-Type': 'application/json',
         }
     }
-    const rtr: { data: { token: string | undefined }}= await axios(refreshTokenRequestData);
+    const rtr: { data: { token: string | undefined } } = await axios(refreshTokenRequestData);
 
     if (!rtr.data.token) {
         return null;
@@ -144,7 +138,7 @@ async function repeatRequest(
         } else {
             response = {
                 status: 'ok',
-                data: null,
+                data: res.data,
             };
         }
         return resolve(response);

@@ -12,7 +12,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import Switch from 'react-bootstrap/esm/Switch';
 import HomePage from './components/HomePage/HomePage';
 import { ContactPage } from './components/ContactPage/ContactPage';
-import { UserLoginPage } from './components/UserLoginPage/UserLoginPage';
+import UserLoginPage from './components/UserLoginPage/UserLoginPage';
 import MoviePage from './components/MoviePage/MoviePage';
 
 const menuItems = [
