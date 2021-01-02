@@ -106,7 +106,7 @@ export default class UserLoginPage extends Component {
                             </Card.Title>
                             <Form>
                                 <Form.Group>
-                                    <Form.Label htmlFor="username">E-mail:</Form.Label>
+                                    <Form.Label htmlFor="username">Username:</Form.Label>
                                     <Form.Control type="text" id="username" 
                                         value={ this.state.username }
                                         onChange={ event => this.formInputChanged(event as any) } />
