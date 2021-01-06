@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MovieType from '../../types/MovieType';
 import { Link, Redirect } from 'react-router-dom';
 import api, { ApiResponse } from '../../api/api';
+import MoviePage from '../MoviePage/MoviePage';
 
 interface HomePageState {
     isUserLoggedIn: boolean;

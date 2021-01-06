@@ -2,9 +2,10 @@ import { faSearch, faVideo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import api, { ApiResponse } from "../../api/api";
 import MovieType from "../../types/MovieType";
+import SingleMoviePreview from "../SingleMoviePreview/SingleMoviePreview";
 
 
 interface MoviePageProperties {
@@ -21,6 +22,7 @@ interface MoviePageState {
     message: string;
     filters: {
         keywords: string;
+        genre: "comedy" | "action";
         priceMinimum: number;
         priceMaxium: number;
         order: "name asc" | "name desc" | "price asc" | "price desc";
@@ -51,6 +53,7 @@ export default class MoviePage extends Component<MoviePageProperties> {
             message: '',
             filters: {
                 keywords: '',
+                genre: "comedy",
                 priceMinimum: 0.01,
                 priceMaxium: 100000,
                 order: "price asc",
@@ -119,6 +122,12 @@ export default class MoviePage extends Component<MoviePageProperties> {
         }));
     }
 
+    private filterGenreChanged(event: React.ChangeEvent<HTMLSelectElement>) {
+        this.setNewFilter(Object.assign(this.state.filters, {
+            genre: event.target.value,
+        }));
+    }
+
     private applyFilters() {
         console.log('Trenutni filteri su: ', this.state.filters);
         this.getMovieData();
@@ -161,6 +170,16 @@ export default class MoviePage extends Component<MoviePageProperties> {
                     </Form.Control>
                 </Form.Group>
 
+                {/* <Form.Group>
+                    <Form.Control as="select" id="genreOrder"
+                        value={ this.state.filters.genre }
+                        onChange={ (e) => this.filterGenreChanged(e as any)}>
+                        <option value="comedy">Sort by comedy</option>
+                        <option value="action">Sort by action</option>
+                    </Form.Control>
+                </Form.Group> */}
+
+                
                 <Form.Group>
                     <Button variant="primary" block onClick={() => this.applyFilters() } >
                         <FontAwesomeIcon icon={ faSearch } /> Search
@@ -186,27 +205,7 @@ export default class MoviePage extends Component<MoviePageProperties> {
 
     private singleMovie(movie: MovieType) {
         return (
-            <Col lg="3" md="4" sm="6" xs="12">
-                <Card className="mb-3">
-                    <Card.Img>
-
-                    </Card.Img>
-                    <Card.Body>
-                        <Card.Title as="p">
-                            { movie.name }
-                        </Card.Title>
-                        <Card.Text>
-                            { movie.description }
-                        </Card.Text>
-                        <Card.Text>
-                           Price: { Number(movie.price).toFixed(2) } EUR
-                        </Card.Text>
-                        <Link to={ `/movie/${ movie.movieId}`} className="btn btn-primary btn-block btn-sm">
-                            Open movie page
-                        </Link>
-                    </Card.Body>
-                </Card>
-            </Col>
+            <SingleMoviePreview movie={movie} />
         );
     }
 
@@ -261,6 +260,7 @@ export default class MoviePage extends Component<MoviePageProperties> {
 
         api('api/movie/search', 'post', {
             keywords: this.state.filters.keywords,
+            genre: this.state.filters.genre,
             priceMin: this.state.filters.priceMinimum,
             priceMax: this.state.filters.priceMaxium,
             orderBy: orderBy,
