@@ -233,11 +233,9 @@ export default class MoviePage extends Component<MoviePageProperties> {
     }
 
     private setLogginState(isLoggedIn: boolean) {
-        const newState = Object.assign(this.state, {
+        this.setState(Object.assign(this.state, {
             isUserLoggedIn: isLoggedIn,
-        });
-
-        this.setState(newState);
+        }));
     }
 
     private setMessage(message: string) {

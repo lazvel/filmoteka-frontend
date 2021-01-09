@@ -15,12 +15,14 @@ import { ContactPage } from './components/ContactPage/ContactPage';
 import UserLoginPage from './components/UserLoginPage/UserLoginPage';
 import MoviePage from './components/MoviePage/MoviePage';
 import { UserRegistrationPage } from './components/UserRegistrationPage/UserRegistrationPage';
+import OrdersPage from './components/Orders/OrdersPage';
 
 const menuItems = [
   new MainMenuItem("Home", "/"),
   new MainMenuItem("Contact", "/contact"),
   new MainMenuItem("Login", "/user/login"),
   new MainMenuItem("Register", "/user/register/"),
+  new MainMenuItem("My Orders", "/user/orders/"),
 
 ];
 
@@ -34,6 +36,7 @@ ReactDOM.render(
         <Route path="/user/login" component={ UserLoginPage }/>
         <Route path="/user/register" component={ UserRegistrationPage }/>
         <Route path="/movie/:mId" component={ MoviePage }/>
+        <Route path="/user/orders" component={ OrdersPage }/>
       </Switch>
     </HashRouter>
   </React.StrictMode>,

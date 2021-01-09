@@ -47,7 +47,7 @@ export default class SingleMoviePreview extends Component<SingleMoviePreviewProp
     
     render() {
         return (
-            <Col lg="4" md="6" sm="6" xs="12">
+            <Col lg="4" md="4" sm="6" xs="12">
                 <Card className="mb-3">
                     <Card.Img>
 

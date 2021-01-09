@@ -12,6 +12,7 @@ export default interface CartType {
             genre: string;
             moviePrices: {
                 moviePriceId: number;
+                createdAt: string;
                 price: number;
             }[];
         }

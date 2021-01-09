@@ -102,7 +102,7 @@ export default class UserLoginPage extends Component {
                     <Card>
                         <Card.Body>
                             <Card.Title>
-                                <FontAwesomeIcon icon={ faUser} />User Login
+                                <FontAwesomeIcon icon={ faUser } />User Login
                             </Card.Title>
                             <Form>
                                 <Form.Group>
