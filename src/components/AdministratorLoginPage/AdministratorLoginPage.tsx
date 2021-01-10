@@ -1,4 +1,4 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faMagnet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Component } from "react";
 import { Alert, Button, Card, Col, Container, Form } from "react-bootstrap";
@@ -7,7 +7,7 @@ import api, { ApiResponse, saveToken, saveRefreshToken } from "../../api/api";
 import RoledMainMenu from "../RoledMainMenu/RoledMainMenu";
 
 
-interface UserLoginPageState {
+interface AdministratorLoginPageState {
     username: string,
     password: string,
     errorMessage: string;
@@ -15,8 +15,8 @@ interface UserLoginPageState {
 }
 
 
-export default class UserLoginPage extends Component {
-    state: UserLoginPageState;
+export default class AdministratorLoginPage extends Component {
+    state: AdministratorLoginPageState;
 
     constructor(props: Readonly<{}>) {
         super(props)
@@ -26,8 +26,6 @@ export default class UserLoginPage extends Component {
             password: '',
             errorMessage: '',
             isLoggedIn: false,
-            
-            
         }
     }
     
@@ -61,7 +59,7 @@ export default class UserLoginPage extends Component {
             password: this.state.password,
         };
 
-        api('/auth/user/login', 'post', data)
+        api('/auth/administrator/login', 'post', data)
             .then((res: ApiResponse) => {
                 //console.log(res);
                 if (res.status === "error") {
@@ -74,7 +72,7 @@ export default class UserLoginPage extends Component {
                         let message = '';
 
                         switch (res.data.statusCode) {
-                            case -3001: message = 'Unkown email!'; break;
+                            case -3001: message = 'Unkown username!'; break;
                             case -3002: message = 'Bad password!'; break;
                         }
 
@@ -83,9 +81,9 @@ export default class UserLoginPage extends Component {
                         return;
                     }
 
-                    saveToken('user', res.data.token);
-                    saveRefreshToken('user', res.data.refreshToken);
-
+                    saveToken('administrator', res.data.token);
+                    saveRefreshToken('administrator', res.data.refreshToken);
+                    // saveIdentity('administrator', res.data.identity);
                     this.setLogginState(true);
                 } 
             });
@@ -94,7 +92,7 @@ export default class UserLoginPage extends Component {
     render() {
         if (this.state.isLoggedIn === true) {
             return (
-                <Redirect to="/" /> 
+                <Redirect to="/administrator/dashboard" /> 
             );
         }
         return (
@@ -104,7 +102,7 @@ export default class UserLoginPage extends Component {
                     <Card>
                         <Card.Body>
                             <Card.Title>
-                                <FontAwesomeIcon icon={ faUser } />User Login
+                                <FontAwesomeIcon icon={ faMagnet } />Administrator Login
                             </Card.Title>
                             <Form>
                                 <Form.Group>

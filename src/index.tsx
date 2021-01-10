@@ -7,7 +7,6 @@ import 'jquery/dist/jquery.js';
 import 'popper.js/dist/popper.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
-import { MainMenu, MainMenuItem } from './components/MainMenu/MainMenu';
 import { HashRouter, Route } from 'react-router-dom';
 import Switch from 'react-bootstrap/esm/Switch';
 import HomePage from './components/HomePage/HomePage';
@@ -16,19 +15,11 @@ import UserLoginPage from './components/UserLoginPage/UserLoginPage';
 import MoviePage from './components/MoviePage/MoviePage';
 import { UserRegistrationPage } from './components/UserRegistrationPage/UserRegistrationPage';
 import OrdersPage from './components/Orders/OrdersPage';
-
-const menuItems = [
-  new MainMenuItem("Home", "/"),
-  new MainMenuItem("Contact", "/contact"),
-  new MainMenuItem("Login", "/user/login"),
-  new MainMenuItem("Register", "/user/register/"),
-  new MainMenuItem("My Orders", "/user/orders/"),
-
-];
+import AdministratorLoginPage from './components/AdministratorLoginPage/AdministratorLoginPage';
+import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
 
 ReactDOM.render(
   <React.StrictMode>
-    <MainMenu items={ menuItems }></MainMenu>
     <HashRouter>
       <Switch>
         <Route exact path="/" component={ HomePage }/>
@@ -37,6 +28,8 @@ ReactDOM.render(
         <Route path="/user/register" component={ UserRegistrationPage }/>
         <Route path="/movie/:mId" component={ MoviePage }/>
         <Route path="/user/orders" component={ OrdersPage }/>
+        <Route path="/administrator/login" component={ AdministratorLoginPage }/>
+        <Route path="/administrator/dashboard" component={ AdministratorDashboard }/>
       </Switch>
     </HashRouter>
   </React.StrictMode>,

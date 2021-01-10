@@ -5,6 +5,7 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import api, { ApiResponse } from "../../api/api";
 import MovieType from "../../types/MovieType";
+import RoledMainMenu from "../RoledMainMenu/RoledMainMenu";
 import SingleMoviePreview from "../SingleMoviePreview/SingleMoviePreview";
 
 
@@ -69,6 +70,7 @@ export default class MoviePage extends Component<MoviePageProperties> {
         }
         return (
             <Container>
+                <RoledMainMenu role="user" />
                 <Card>
                     <Card.Body>
                         <Card.Title>

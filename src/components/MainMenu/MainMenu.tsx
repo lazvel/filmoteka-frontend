@@ -15,6 +15,7 @@ export class MainMenuItem {
 
 interface MainMenuProperties {
     items: MainMenuItem[];
+    showCart?: boolean;
 }
 
 interface MainMenuState {
@@ -41,13 +42,13 @@ export class MainMenu extends Component<MainMenuProperties> {
 
     render() {
         return (
-                <Nav variant="tabs">
-                    <HashRouter>
-                        { this.state.items.map(this.makeNavLink) }
-                        <Cart/>
-                    </HashRouter>
-                    
-                </Nav>
+            <Nav variant="tabs">
+                <HashRouter>
+                    { this.state.items.map(this.makeNavLink) }
+                    { this.props.showCart ? <Cart /> : ''}
+                </HashRouter>
+                
+            </Nav>
         )
     }
 
