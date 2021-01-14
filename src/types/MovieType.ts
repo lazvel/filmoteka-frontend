@@ -6,4 +6,9 @@ export default class MovieType {
     year? : string;
     rating?: number;
     price?: number;
+
+    moviePrices?: {
+        moviePriceId: number;
+        price: number;
+    }[];
 }

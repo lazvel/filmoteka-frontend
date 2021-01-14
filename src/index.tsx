@@ -17,6 +17,8 @@ import { UserRegistrationPage } from './components/UserRegistrationPage/UserRegi
 import OrdersPage from './components/Orders/OrdersPage';
 import AdministratorLoginPage from './components/AdministratorLoginPage/AdministratorLoginPage';
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
+import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
+import AdministratorDashboardMovie from './components/AdministratorDashboardMovie/AdministratorDashboardCategory/AdministratorDashboardMovie';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,7 +31,9 @@ ReactDOM.render(
         <Route path="/movie/:mId" component={ MoviePage }/>
         <Route path="/user/orders" component={ OrdersPage }/>
         <Route path="/administrator/login" component={ AdministratorLoginPage }/>
-        <Route path="/administrator/dashboard" component={ AdministratorDashboard }/>
+        <Route exact path="/administrator/dashboard/" component={ AdministratorDashboard }/>
+        <Route path="/administrator/dashboard/category/" component={ AdministratorDashboardCategory }/>
+        <Route path="/administrator/dashboard/movies/" component={ AdministratorDashboardMovie }/> 
       </Switch>
     </HashRouter>
   </React.StrictMode>,
