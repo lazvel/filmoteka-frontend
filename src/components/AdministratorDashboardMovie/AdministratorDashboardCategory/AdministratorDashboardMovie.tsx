@@ -99,7 +99,7 @@ class AdministratorDashboardMovie extends React.Component {
 
     private setEditModalVisibleState(newState: boolean) {
         this.setState(Object.assign(this.state, 
-            Object.assign(this.state.addModal, {
+            Object.assign(this.state.editModal, {
                 visible: newState
             })
         ));
@@ -107,7 +107,7 @@ class AdministratorDashboardMovie extends React.Component {
 
     private setEditModalStringFieldState(fieldName: string, newValue: string) {
         this.setState(Object.assign(this.state, 
-            Object.assign(this.state.addModal, {
+            Object.assign(this.state.editModal, {
                 [ fieldName ]: newValue,
             })
         ));
@@ -115,7 +115,7 @@ class AdministratorDashboardMovie extends React.Component {
 
     private setEditModalNumberFieldState(fieldName: string, newValue: any) {
         this.setState(Object.assign(this.state, 
-            Object.assign(this.state.addModal, {
+            Object.assign(this.state.editModal, {
                 [ fieldName ]: (newValue === 'null') ? null : Number(newValue),
             })
         ));
@@ -212,10 +212,10 @@ class AdministratorDashboardMovie extends React.Component {
                                         <td className="text-right">{ movie.movieId }</td>
                                         <td>{ movie.name }</td>
                                         <td>{ movie.genre }</td>
-                                        <td>{ movie.year }</td>
-                                        <td>{ movie.rating }</td>
+                                        <td className="text-right">{ movie.year }</td>
+                                        <td className="text-center">{ movie.rating }</td>
                                         <td className="text-right">{ movie.price }</td>
-                                        <td>
+                                        <td className="text-center">
                                             <Button variant="info" size="sm"
                                                 onClick={ () => this.showEditModal(movie) }>
                                                 <FontAwesomeIcon icon={ faEdit } /> Edit
@@ -231,7 +231,7 @@ class AdministratorDashboardMovie extends React.Component {
                 <Modal size="lg" centered show={ this.state.addModal.visible }
                     onHide={ () => this.setAddModalVisibleState(false) }>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add/Edit movie</Modal.Title>
+                        <Modal.Title>Add movie</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form.Group>
@@ -267,7 +267,7 @@ class AdministratorDashboardMovie extends React.Component {
 
                             <Form.Group>
                                 <Form.Label htmlFor="price">Price</Form.Label>
-                                <Form.Control id="price" type="number" value={ this.state.addModal.price } 
+                                <Form.Control id="price" type="number" min={ 0.01 } step={ 0.01 }value={ this.state.addModal.price } 
                                     onChange={ (e) => this.setAddModalNumberFieldState('price', e.target.value)}/>
                             </Form.Group>
                             <Form.Group>
@@ -288,31 +288,45 @@ class AdministratorDashboardMovie extends React.Component {
                         </Modal.Header>
                         <Modal.Body>
                             <Form.Group>
-                                <Form.Label htmlFor="name">Name</Form.Label>
-                                <Form.Control id="name" type="text" value={ this.state.addModal.name } 
+                                <Form.Label htmlFor="edit-name">Name</Form.Label>
+                                <Form.Control id="edit-name" type="text" value={ this.state.editModal.name } 
                                     onChange={ (e) => this.setEditModalStringFieldState('name', e.target.value)}/>
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label htmlFor="genre">Genre</Form.Label>
-                                <Form.Control id="genre" type="text" value={ this.state.addModal.genre } 
+                                <Form.Label htmlFor="edit-genre">Genre</Form.Label>
+                                <Form.Control id="edit-genre" type="text" value={ this.state.editModal.genre } 
                                     onChange={ (e) => this.setEditModalStringFieldState('genre', e.target.value)}/>
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label htmlFor="year">Year</Form.Label>
-                                <Form.Control id="year" type="text" value={ this.state.addModal.year } 
+                                <Form.Label htmlFor="edit-description">Description</Form.Label>
+                                <Form.Control id="edit-description" as="textarea" value={ this.state.editModal.description } 
+                                    onChange={ (e) => this.setEditModalStringFieldState('description', e.target.value)} 
+                                    rows={10} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label htmlFor="edit-year">Year</Form.Label>
+                                <Form.Control id="edit-year" type="text" value={ this.state.editModal.year } 
                                     onChange={ (e) => this.setEditModalStringFieldState('year', e.target.value)}/>
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label htmlFor="rating">Rating</Form.Label>
-                                <Form.Control id="rating" type="number" value={ this.state.addModal.rating } 
+                                <Form.Label htmlFor="edit-rating">Rating</Form.Label>
+                                <Form.Control id="edit-rating" type="number" value={ this.state.editModal.rating } 
                                     onChange={ (e) => this.setEditModalNumberFieldState('rating', e.target.value)}/>
                             </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label htmlFor="edit-price">Price</Form.Label>
+                                <Form.Control id="edit-price" type="number" min={ 0.01 } step={ 0.01 }value={ this.state.editModal.price } 
+                                    onChange={ (e) => this.setEditModalNumberFieldState('price', e.target.value)}/>
+                            </Form.Group>
+
                             <Form.Group>
                                 <Button variant="primary" onClick={() => this.doEditMovie()}>
-                                    <FontAwesomeIcon icon={ faEdit} /> Edit movie
+                                    <FontAwesomeIcon icon={ faEdit } /> Edit movie
                                 </Button>
                             </Form.Group>
                             { this.state.editModal.message ? (
@@ -336,18 +350,19 @@ class AdministratorDashboardMovie extends React.Component {
     }
 
     private showEditModal(movie: MovieType) {
+        this.setEditModalNumberFieldState('movieId', movie.movieId);
         this.setEditModalStringFieldState('name', String(movie.name));
         this.setEditModalStringFieldState('genre', String(movie.genre));
-        this.setEditModalStringFieldState('description', String(movie.genre));
+        this.setEditModalStringFieldState('description', String(movie.description));
         this.setEditModalStringFieldState('year', String(movie.year));
-        this.setAddModalNumberFieldState('rating', movie.rating);
-        this.setAddModalNumberFieldState('price', 0);
+        this.setEditModalNumberFieldState('rating', movie.rating);
+        this.setEditModalNumberFieldState('price', movie.price);
         this.setEditModalStringFieldState('message', '');
         this.setEditModalVisibleState(true);
     }
 
     private doAddMovie() {
-        api('api/movie/', 'post', {
+        api('api/movie/createFull', 'post', {
             name: this.state.addModal.name,
             genre: this.state.addModal.genre,
             description: this.state.addModal.description,
@@ -371,13 +386,13 @@ class AdministratorDashboardMovie extends React.Component {
     }
 
     private doEditMovie() {
-        api('api/movie/'  + this.state.editModal.movieId, 'post', {
-            name: this.state.addModal.name,
-            genre: this.state.addModal.genre,
-            description: this.state.addModal.description,
-            year: this.state.addModal.year,
-            rating: this.state.addModal.rating,
-            price: this.state.addModal.price,
+        api('api/movie/'  + this.state.editModal.movieId, 'patch', {
+            name: this.state.editModal.name,
+            genre: this.state.editModal.genre,
+            description: this.state.editModal.description,
+            year: this.state.editModal.year,
+            rating: this.state.editModal.rating,
+            price: this.state.editModal.price,
         }, 'administrator')
         .then((res: ApiResponse) => {
             if (res.status === 'login') {
@@ -386,7 +401,7 @@ class AdministratorDashboardMovie extends React.Component {
             }
 
             if (res.status === 'error') {
-                this.setAddModalStringFieldState('message', JSON.stringify(res.data));
+                this.setEditModalStringFieldState('message', JSON.stringify(res.data));
             }
 
             this.setEditModalVisibleState(false);
