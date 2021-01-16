@@ -227,9 +227,9 @@ export default class MoviePage extends Component<MoviePageProperties> {
     }
 
     componentWillReceiveProps(newProps: MoviePageProperties) {
-        if (newProps.match.params.mId === this.props.match.params.mId) {
-            return;
-        }
+        // if (newProps.match.params.mId === this.props.match.params.mId) {
+        //     return;
+        // }
 
         this.getMovieData();
     }

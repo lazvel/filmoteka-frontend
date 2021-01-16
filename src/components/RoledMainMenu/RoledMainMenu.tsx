@@ -30,6 +30,7 @@ export class RoledMainMenu extends Component<RoledMainMenuProperties> {
         return [
             new MainMenuItem("Home", "/"),
             new MainMenuItem("Contact", "/contact"),
+            new MainMenuItem("Movies", "/movies"),
             new MainMenuItem("My Orders", "/user/orders/"),
             new MainMenuItem("Log out", "/user/logout/"),
         ];

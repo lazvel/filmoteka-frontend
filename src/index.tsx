@@ -19,6 +19,7 @@ import AdministratorLoginPage from './components/AdministratorLoginPage/Administ
 import AdministratorDashboard from './components/AdministratorDashboard/AdministratorDashboard';
 import AdministratorDashboardCategory from './components/AdministratorDashboardCategory/AdministratorDashboardCategory';
 import AdministratorDashboardMovie from './components/AdministratorDashboardMovie/AdministratorDashboardCategory/AdministratorDashboardMovie';
+import MoviePageDetails from './components/MoviePageDetails/MoviePageDetails';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -28,7 +29,8 @@ ReactDOM.render(
         <Route path="/contact" component={ ContactPage }/>
         <Route path="/user/login" component={ UserLoginPage }/>
         <Route path="/user/register" component={ UserRegistrationPage }/>
-        <Route path="/movie/:mId" component={ MoviePage }/>
+        <Route path="/movies/" component={ MoviePage }/>
+        <Route path="/movie/:mId/" component={ MoviePageDetails }/>
         <Route path="/user/orders" component={ OrdersPage }/>
         <Route path="/administrator/login" component={ AdministratorLoginPage }/>
         <Route exact path="/administrator/dashboard/" component={ AdministratorDashboard }/>
