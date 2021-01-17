@@ -53,7 +53,7 @@ export default class AddToCartInput extends Component<AddToCartInputPreviewPrope
                             onChange={(e) => this.quantityChaned(e as any)}/>
                     </Col>
                     <Col sm="5">
-                        <Button block variant="secondary"
+                        <Button block variant="primary"
                             onClick={ () => this.addToCart() }>Buy</Button>
                     </Col>
                 </Row>

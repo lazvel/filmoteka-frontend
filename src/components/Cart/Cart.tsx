@@ -1,4 +1,4 @@
-import { faCartArrowDown, faMinusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCartArrowDown, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react'
 import { Alert, Button, Form, Modal, Nav, Table } from 'react-bootstrap';
@@ -191,8 +191,9 @@ export default class Cart extends Component {
                                                 <td className="text-right">{ price } EUR</td>
                                                 <td className="text-right">{ total } EUR</td>
                                                 <td>
-                                                    <FontAwesomeIcon icon={ faMinusSquare } 
-                                                        onClick={ () => this.removeFromCart(item.movie.movieId)} />
+                                                    <Button variant="danger" className="btn-sm" onClick={ () => this.removeFromCart(item.movie.movieId)} >
+                                                        <FontAwesomeIcon icon={ faMinus} />
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         );

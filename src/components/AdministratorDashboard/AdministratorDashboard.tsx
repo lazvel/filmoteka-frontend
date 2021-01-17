@@ -64,10 +64,8 @@ class AdministratorDashboard extends React.Component {
                             <FontAwesomeIcon icon={ faHome } /> AdministratorDashboard
                         </Card.Title>
                         <ul>
-                            <li>
-                                <Link to="/administrator/dashboard/category/">Categories</Link>
-                            </li>
-                            <li><Link to="/administrator/dashboard/movies/">Movies</Link></li>
+                             <li><Link to="/administrator/dashboard/movies/">Movies</Link></li>
+                            <li><Link to="/administrator/dashboard/order/">Orders</Link></li>
                         </ul>
                     </Card.Body>
                 </Card>
