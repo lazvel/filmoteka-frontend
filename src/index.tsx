@@ -20,6 +20,8 @@ import AdministratorDashboard from './components/AdministratorDashboard/Administ
 import AdministratorDashboardMovie from './components/AdministratorDashboardMovie/AdministratorDashboardCategory/AdministratorDashboardMovie';
 import MoviePageDetails from './components/MoviePageDetails/MoviePageDetails';
 import AdministratorDashboardOrder from './components/AdministratorDashboardOrder/AdministratorDashboardOrder';
+import AdministratorLogoutPage from './components/AdministratorLogoutPage/AdministratorLogoutPage';
+import UserLogoutPage from './components/UserLogoutPage/UserLogoutPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -28,11 +30,13 @@ ReactDOM.render(
         <Route exact path="/" component={ HomePage }/>
         <Route path="/contact" component={ ContactPage }/>
         <Route path="/user/login" component={ UserLoginPage }/>
+        <Route path="/user/logout/" component={ UserLogoutPage }/>
         <Route path="/user/register" component={ UserRegistrationPage }/>
         <Route path="/movies/" component={ MoviePage }/>
         <Route path="/movie/:mId/" component={ MoviePageDetails }/>
         <Route path="/user/orders" component={ OrdersPage }/>
         <Route path="/administrator/login" component={ AdministratorLoginPage }/>
+        <Route path="/administrator/logout" component={ AdministratorLogoutPage }/>
         <Route exact path="/administrator/dashboard/" component={ AdministratorDashboard }/>
         <Route path="/administrator/dashboard/movies/" component={ AdministratorDashboardMovie }/> 
         <Route path="/administrator/dashboard/order/" component={ AdministratorDashboardOrder }/> 
